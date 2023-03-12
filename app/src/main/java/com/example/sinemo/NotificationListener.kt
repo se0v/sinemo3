@@ -7,7 +7,7 @@ import android.service.notification.StatusBarNotification
 
 class NotificationListener: NotificationListenerService() {
     private object ApplicationPackageNames {
-        const val INSTAGRAM_PACK_NAME = "com.instagram.android"
+        const val INSTAGRAM_PACK_NAME = "org.telegram.messenger"
     }
     object InterceptedNotificationCode {
         const val INSTAGRAM_CODE = 1

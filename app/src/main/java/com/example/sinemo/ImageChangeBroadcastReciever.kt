@@ -1,14 +1,21 @@
 package com.example.sinemo
 
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.MediaRecorder
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import java.io.IOException
 
 open class ImageChangeBroadcastReceiver: BroadcastReceiver() {
-    var startrec = false
+    private var startrec = false
     override fun onReceive(p0: Context?, p1: Intent?) {
         val receivedNotificationCode: Int = p1!!.getIntExtra("Notification Code", -1)
         Log.d("RNC", receivedNotificationCode.toString())
@@ -16,7 +23,7 @@ open class ImageChangeBroadcastReceiver: BroadcastReceiver() {
     }
     private fun changeInterceptedNotificationImage(notificationCode: Int) {
         when (notificationCode) {
-            NotificationListener.InterceptedNotificationCode.INSTAGRAM_CODE -> startrec = true
+            NotificationListener.InterceptedNotificationCode.INSTAGRAM_CODE -> startRecording() //startrec = true
 
             NotificationListener.InterceptedNotificationCode.OTHER_NOTIFICATIONS_CODE -> startrec = false
         }
