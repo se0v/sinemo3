@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver? = null
-            // register a receiver to tell the MainActivity when a notification has been received
+            //register a receiver to tell the MainActivity when a notification has been received
             imageChangeBroadcastReceiver = ImageChangeBroadcastReceiver()
             val intentFilter = IntentFilter()
             intentFilter.addAction("com.example.sinemo")
