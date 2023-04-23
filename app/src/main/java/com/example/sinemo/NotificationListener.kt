@@ -9,7 +9,7 @@ class NotificationListener: NotificationListenerService() {
     }
     object InterceptedNotificationCode {
         const val INSTAGRAM_CODE = 1
-        const val OTHER_NOTIFICATIONS_CODE = 2 // ignore all notification
+        const val OTHER_NOTIFICATIONS_CODE = 2 //ignore all notification
     }
     override fun onBind(intent: Intent?): IBinder? {
         return super.onBind(intent)
