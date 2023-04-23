@@ -1,5 +1,4 @@
 package com.example.sinemo
-
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Intent
@@ -25,38 +24,17 @@ import androidx.core.content.FileProvider
 import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
-
 class MainActivity : ComponentActivity() {
     @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-            val telegramButton = TelegramLoginButton(this)
-            telegramButton.setCornerRoundness(1f)
-
             var imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver? = null
             // register a receiver to tell the MainActivity when a notification has been received
             imageChangeBroadcastReceiver = ImageChangeBroadcastReceiver()
             val intentFilter = IntentFilter()
             intentFilter.addAction("com.example.sinemo")
             registerReceiver(imageChangeBroadcastReceiver, intentFilter)
-
-            val scaffoldState = rememberScaffoldState()
-            val scope = rememberCoroutineScope()
-            val runningProcessInfo = mutableListOf<String>()
-            val status by remember { mutableStateOf(runningProcessInfo) }
-            val appService : ActivityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-            val tasks = appService.runningAppProcesses
-            for(task in tasks){
-                if (task.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    runningProcessInfo.add(task.processName)
-                    /*scope.launch { scaffoldState.snackbarHostState.showSnackbar(
-                    message = "Bye Nonexistence!")}*/
-                }
-                Toast.makeText(this.applicationContext, runningProcessInfo.toString(), Toast.LENGTH_LONG).show()
-            }
-
             SinemoTheme {
                 Scaffold(
                     topBar = {
@@ -88,7 +66,6 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
-                            Text(text = status.toString())
                             Button(onClick = { stopRecording()
                                 try {
                                     val file = File(output)
@@ -131,12 +108,6 @@ class MainActivity : ComponentActivity() {
         super.onSaveInstanceState(outState)
         outState.putSerializable("payload", payload)
     }
-
-    val loginLongClickListener = View.OnLongClickListener {
-        TelegramPassport.showAppInstallAlert(this@MainActivity)
-        true
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 352) {

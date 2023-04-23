@@ -1,10 +1,8 @@
 package com.example.sinemo
-
 import android.content.Intent
 import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-
 class NotificationListener: NotificationListenerService() {
     private object ApplicationPackageNames {
         const val INSTAGRAM_PACK_NAME = "org.telegram.messenger"

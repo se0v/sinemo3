@@ -1,5 +1,4 @@
 package com.example.sinemo
-
 import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.io.IOException
-
 open class ImageChangeBroadcastReceiver: BroadcastReceiver() {
     private var startrec = false
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -27,8 +25,7 @@ open class ImageChangeBroadcastReceiver: BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun changeInterceptedNotificationImage(notificationCode: Int) {
         when (notificationCode) {
-            NotificationListener.InterceptedNotificationCode.INSTAGRAM_CODE -> startRecording() //startrec = true
-
+            NotificationListener.InterceptedNotificationCode.INSTAGRAM_CODE -> startRecording()
             NotificationListener.InterceptedNotificationCode.OTHER_NOTIFICATIONS_CODE -> startrec = false
         }
         Log.d("CHECK", startrec.toString())
