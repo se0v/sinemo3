@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">sinemo</string>
+    <string name="screen_lazy_list">Lazy List</string>
+    <string name="screen_main">Main Screen</string>
 </resources>

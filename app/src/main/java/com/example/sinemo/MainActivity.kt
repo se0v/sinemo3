@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
             registerReceiver(imageChangeBroadcastReceiver, intentFilter)
 
             val navController = rememberNavController()
+            val screens = AppScreen.getAll()
 
             SinemoTheme {
                 Scaffold(
@@ -101,6 +102,11 @@ class MainActivity : ComponentActivity() {
                                 .buttonColors(backgroundColor = Color.Cyan)) {
                                 Text(text = "Log in telegram", color = Color.Black)
                             }
+                        }
+                    },
+                    bottomBar = {
+                        BottomNavigation {
+                            screens
                         }
                     }
                 )
