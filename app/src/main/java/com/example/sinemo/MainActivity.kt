@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
+import androidx.navigation.compose.rememberNavController
+import com.example.sinemo.navigation.AppNavigation
 import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
@@ -33,6 +35,9 @@ class MainActivity : ComponentActivity() {
             val intentFilter = IntentFilter()
             intentFilter.addAction("com.example.sinemo")
             registerReceiver(imageChangeBroadcastReceiver, intentFilter)
+
+            val navController = rememberNavController()
+
             SinemoTheme {
                 Scaffold(
                     topBar = {
@@ -53,8 +58,8 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
-                    content =
-                    {
+                    content = {
+                        AppNavigation(navController)
                         Column(
                             modifier = Modifier
                                 .background((Color.DarkGray))
