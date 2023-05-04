@@ -1,6 +1,7 @@
 package com.example.sinemo
 import android.annotation.SuppressLint
 import android.app.*
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -15,12 +16,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.sinemo.navigation.AppNavigation
+import com.example.sinemo.navigation.AppScreen
 import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
@@ -38,6 +45,9 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
             val screens = AppScreen.getAll()
+            var selectedScreen by remember {
+                mutableStateOf(screens.first())
+            }
 
             SinemoTheme {
                 Scaffold(
@@ -106,8 +116,26 @@ class MainActivity : ComponentActivity() {
                     },
                     bottomBar = {
                         BottomNavigation {
-                            screens
+                            screens.forEach { screen ->
+                                BottomNavigationItem(
+                                    selected = selectedScreen == screen,
+                                    onClick = {
+                                        selectedScreen = screen
+                                        navController.navigate(screen.route)
+                                    },
+                                    icon = {
+                                        Icon(imageVector = screen.icon,
+                                            contentDescription = null)
+                                    },
+                                    label = {
+                                        Text(text = stringResource(screen.nameResource))
+                                    },
+                                    alwaysShowLabel = false
+
+                                )
+                            }
                         }
+
                     }
                 )
             }

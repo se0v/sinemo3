@@ -13,12 +13,12 @@ sealed class AppScreen(
     val icon: ImageVector
 ){
     object LazyList: AppScreen("lazylist", R.string.screen_lazy_list, Icons.Default.Add)
-    object RecyclerView: AppScreen("recyclerview", R.string.screen_main, Icons.Default.Home)
+    object MainScreen: AppScreen("mainscreen", R.string.screen_main, Icons.Default.Home)
 
     companion object {
         fun getAll() = listOf(
             LazyList,
-            RecyclerView
+            MainScreen
         )
     }
 }
