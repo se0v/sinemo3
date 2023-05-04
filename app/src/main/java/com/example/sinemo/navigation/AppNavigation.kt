@@ -15,7 +15,12 @@ fun AppNavigation(
         startDestination = ""
     ){
         composable(
-            route = ""
+            route = "mainscreen"
+        ){
+
+        }
+        composable(
+            route = "lazylist"
         ){
 
         }
