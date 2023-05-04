@@ -14,7 +14,7 @@ fun AppNavigation(
     
     NavHost(
         navController = navController,
-        startDestination = "mainscreen"
+        startDestination = AppScreen.LazyList.route
     ){
         composable(
             route = "mainscreen"
@@ -22,7 +22,7 @@ fun AppNavigation(
             LazyListScreen()
         }
         composable(
-            route = "lazylist"
+            route = AppScreen.MainScreen.route
         ){
             MainScreen()
         }
