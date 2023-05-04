@@ -17,7 +17,7 @@ fun AppNavigation(
         startDestination = AppScreen.LazyList.route
     ){
         composable(
-            route = "mainscreen"
+            route = AppScreen.LazyList.route
         ){
             LazyListScreen()
         }
