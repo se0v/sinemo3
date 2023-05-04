@@ -22,6 +22,7 @@ import androidx.core.content.FileProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.sinemo.navigation.AppNavigation
 import com.example.sinemo.ui.theme.SinemoTheme
+import com.example.sinemo.ui.theme.senderEm
 import org.telegram.passport.*
 import java.io.File
 class MainActivity : ComponentActivity() {
@@ -70,21 +71,7 @@ class MainActivity : ComponentActivity() {
                         )
                         {
                             Button(onClick = { stopRecording()
-                                try {
-                                    val file = File(output)
-                                    if(file.exists()) {
-                                        val uri = FileProvider.getUriForFile(this@MainActivity, BuildConfig.APPLICATION_ID + ".provider", file)
-                                        val intent = Intent(Intent.ACTION_SEND)
-                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                        intent.type = "audio/ogg"
-                                        intent.putExtra(Intent.EXTRA_STREAM, uri)
-                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                        intent.setPackage("org.telegram.messenger")
-                                        startActivity(intent)
-                                    }
-                                } catch (e: java.lang.Exception) {
-                                    e.printStackTrace()
-                                }
+                                senderEm()
                                              },
                                 colors = ButtonDefaults
                                 .buttonColors(backgroundColor = Color.Black)) {
