@@ -55,17 +55,6 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Text("SinEmo")
-                            },
-                            actions =
-                            {
-                                IconButton(onClick = {})
-                                {
-                                    Icon(
-                                        imageVector = Icons.Default.Face,
-                                        contentDescription = null
-                                    )
-
-                                }
                             }
                         )
                     },
@@ -76,7 +65,7 @@ class MainActivity : ComponentActivity() {
                                 .background((Color.DarkGray))
                                 .fillMaxWidth()
                                 .fillMaxHeight(),
-                            verticalArrangement = Arrangement.SpaceBetween,
+                            verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
