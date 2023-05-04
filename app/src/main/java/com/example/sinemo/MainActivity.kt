@@ -25,10 +25,6 @@ import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
 class MainActivity : ComponentActivity() {
-    companion object{
-        lateinit var instance: MainActivity
-        private set
-    }
     @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,30 +60,47 @@ class MainActivity : ComponentActivity() {
                     },
                     content = {
                         AppNavigation(navController)
-
-                        fun senderFile() {
-                            try {
-                                val file = File(output)
-                                if (file.exists()) {
-                                    val uri = FileProvider.getUriForFile(
-                                        this@MainActivity,
-                                        BuildConfig.APPLICATION_ID + ".provider",
-                                        file
-                                    )
-                                    val intent = Intent(Intent.ACTION_SEND)
-                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                    intent.type = "audio/ogg"
-                                    intent.putExtra(Intent.EXTRA_STREAM, uri)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                    intent.setPackage("org.telegram.messenger")
-                                    startActivity(intent)
+                        Column(
+                            modifier = Modifier
+                                .background((Color.DarkGray))
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        )
+                        {
+                            Button(onClick = { stopRecording()
+                                try {
+                                    val file = File(output)
+                                    if(file.exists()) {
+                                        val uri = FileProvider.getUriForFile(this@MainActivity, BuildConfig.APPLICATION_ID + ".provider", file)
+                                        val intent = Intent(Intent.ACTION_SEND)
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                        intent.type = "audio/ogg"
+                                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                        intent.setPackage("org.telegram.messenger")
+                                        startActivity(intent)
+                                    }
+                                } catch (e: java.lang.Exception) {
+                                    e.printStackTrace()
                                 }
-                            } catch (e: java.lang.Exception) {
-                                e.printStackTrace()
+                                             },
+                                colors = ButtonDefaults
+                                .buttonColors(backgroundColor = Color.Black)) {
+                                Text(text = "Share emotion ")
+                                Icon(
+                                    imageVector = Icons.Default.Send,
+                                    contentDescription = null
+                                )
                             }
-                        }
-                        fun telep() {
-                            TelegramPassport.request(this@MainActivity, req, tgPassportResult)
+                            Button(onClick = {
+                                telepass()
+                                TelegramPassport.request(this@MainActivity, req, tgPassportResult)
+                            }, colors = ButtonDefaults
+                                .buttonColors(backgroundColor = Color.Cyan)) {
+                                Text(text = "Log in telegram", color = Color.Black)
+                            }
                         }
                     }
                 )
