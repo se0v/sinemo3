@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            lateinit var audioRecordViewModel: AudioRecordViewModel
+
             var imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver? = null
             //register a receiver to tell the MainActivity when a notification has been received
             imageChangeBroadcastReceiver = ImageChangeBroadcastReceiver()
@@ -69,7 +71,7 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
-                            Button(onClick = { stopRecording()
+                            Button(onClick = { audioRecordViewModel.stopRecording()
                                 try {
                                     val file = File(output)
                                     if(file.exists()) {
