@@ -22,9 +22,10 @@ var lastMaxAmplitude = 0
 var lastMaxAmplitudeTime = 0L
 
 class AudioRecordViewModel(application: Application) : AndroidViewModel(application) {
-    private val _audioRecords = MutableLiveData<List<AudioRecordViewModel.AudioRecord>>()
-    val audioRecords: LiveData<List<AudioRecordViewModel.AudioRecord>>
+    private val _audioRecords = MutableLiveData<List<AudioRecord>>()
+    val audioRecords: LiveData<List<AudioRecord>>
         get() = _audioRecords
+
 val handler = Handler(Looper.getMainLooper())
 private val amplitudeRunnable = object : Runnable {
     override fun run() {
@@ -47,7 +48,7 @@ private val amplitudeRunnable = object : Runnable {
 fun startRecording() {
     try {
         val application: Application = MainActivity().application
-        output = Environment.getExternalStorageDirectory().absolutePath + "/recording.ogg"
+        output = "${application.getExternalFilesDir(null)?.absolutePath}/${System.currentTimeMillis()}.ogg"
         mediaRecorder = MediaRecorder()
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.OGG)
