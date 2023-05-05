@@ -32,13 +32,13 @@ import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
 class MainActivity : ComponentActivity() {
-    //private lateinit var audioRecordViewModel: AudioRecordViewModel
+    private lateinit var audioRecordViewModel: AudioRecordViewModel
     @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //audioRecordViewModel = ViewModelProvider(this)[AudioRecordViewModel::class.java]
+        audioRecordViewModel = ViewModelProvider(this)[AudioRecordViewModel::class.java]
         setContent {
-            //AudioRecordScreen(audioRecordViewModel)
+            AudioRecordScreen(audioRecordViewModel)
 
             var imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver? = null
             //register a receiver to tell the MainActivity when a notification has been received
@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
-                            Button(onClick = { stopRecording()
+                            Button(onClick = { audioRecordViewModel.stopRecording()
                                 try {
                                     val file = File(output)
                                     if(file.exists()) {

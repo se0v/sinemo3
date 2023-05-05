@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 
-/*@Composable
+@Composable
 fun AudioRecordList(audioRecordViewModel: AudioRecordViewModel) {
     val audioRecords by audioRecordViewModel.audioRecords.observeAsState(emptyList())
 
@@ -20,4 +20,4 @@ fun AudioRecordList(audioRecordViewModel: AudioRecordViewModel) {
 @Composable
 fun AudioRecordScreen(audioRecordViewModel: AudioRecordViewModel) {
     AudioRecordList(audioRecordViewModel)
-}*/
+}
