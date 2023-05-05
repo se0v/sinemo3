@@ -149,7 +149,9 @@ class MainActivity : ComponentActivity() {
             } else {
                 Toast.makeText(this, "login_canceled", Toast.LENGTH_SHORT).show()
             }}
-}}
+}
+    data class AudioRecord(val filePath: String, val duration: Long)
+}
 
 
 
