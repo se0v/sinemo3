@@ -29,16 +29,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.sinemo.navigation.AppNavigation
 import com.example.sinemo.navigation.AppScreen
-import com.example.sinemo.ui.theme.AudioRecordScreen
 import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 import java.io.File
 class MainActivity : ComponentActivity() {
-    lateinit var audioRecordViewModel: AudioRecordViewModel
+    private lateinit var audioRecordViewModel: AudioRecordViewModel
     @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        audioRecordViewModel = ViewModelProvider(this).get(AudioRecordViewModel::class.java)
+        audioRecordViewModel = ViewModelProvider(this)[AudioRecordViewModel::class.java]
         setContent {
             AudioRecordScreen(audioRecordViewModel)
 

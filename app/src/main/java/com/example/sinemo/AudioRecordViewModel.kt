@@ -48,7 +48,7 @@ private val amplitudeRunnable = object : Runnable {
 fun startRecording() {
     try {
         val application: Application = MainActivity().application
-        output = "${application.getExternalFilesDir(null)?.absolutePath}/${System.currentTimeMillis()}.ogg"
+        output = Environment.getExternalStorageDirectory().absolutePath + "/recording.ogg"
         mediaRecorder = MediaRecorder()
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.OGG)
