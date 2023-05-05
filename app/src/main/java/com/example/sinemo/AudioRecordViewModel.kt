@@ -1,7 +1,6 @@
 package com.example.sinemo
 import android.annotation.SuppressLint
 import android.app.Application
-import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Environment
@@ -14,15 +13,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import java.io.IOException
 import kotlin.math.log10
-var output: String? = null
+var output: String = ""
+//var output: String? = null
 var mediaRecorder: MediaRecorder? = null
 var state: Boolean = false
 var maxAmplitude = 0
 var lastMaxAmplitude = 0
 var lastMaxAmplitudeTime = 0L
-var outputFile: String = ""
 
 class AudioRecordViewModel(application: Application) : AndroidViewModel(application) {
+    private val _audioRecords = MutableLiveData<List<AudioRecordViewModel.AudioRecord>>()
+    val audioRecords: LiveData<List<AudioRecordViewModel.AudioRecord>>
+        get() = _audioRecords
 val handler = Handler(Looper.getMainLooper())
 private val amplitudeRunnable = object : Runnable {
     override fun run() {
@@ -87,8 +89,9 @@ fun stopRecording() {
         handler.removeCallbacks(amplitudeRunnable)
         lastMaxAmplitude = 0
         lastMaxAmplitudeTime = 0L
-        //_audioRecords.value = (_audioRecords.value ?: emptyList()) + AudioRecord(output, 0)
+        _audioRecords.value = (_audioRecords.value ?: emptyList()) + AudioRecord(output, 0)
     }
 }
+    data class AudioRecord(val filePath: String, val duration: Long)
 }
 

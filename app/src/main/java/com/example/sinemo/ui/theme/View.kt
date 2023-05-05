@@ -8,6 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import com.example.sinemo.AudioRecordViewModel
+import com.example.sinemo.output
 
 @Composable
 fun AudioRecordList(audioRecordViewModel: AudioRecordViewModel) {
@@ -15,7 +17,7 @@ fun AudioRecordList(audioRecordViewModel: AudioRecordViewModel) {
 
     LazyColumn {
         items(audioRecords) { audioRecord ->
-            Text(text = outputFile)
+            Text(text = output)
         }
     }
 }
