@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
-                            Button(onClick = { audioRecordViewModel.stopRecording()
+                            Button(onClick = { stopRecording()
                                 try {
                                     val file = File(output)
                                     if(file.exists()) {
@@ -86,12 +86,12 @@ class MainActivity : ComponentActivity() {
                                         intent.setPackage("org.telegram.messenger")
                                         startActivity(intent)
                                     }
-                                } catch (e: java.lang.Exception) {
+                                } catch (e: Exception) {
                                     e.printStackTrace()
                                 }
-                                             },
+                            },
                                 colors = ButtonDefaults
-                                .buttonColors(backgroundColor = Color.Black)) {
+                                    .buttonColors(backgroundColor = Color.Black)) {
                                 Text(text = "Share emotion ")
                                 Icon(
                                     imageVector = Icons.Default.Send,
