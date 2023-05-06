@@ -14,7 +14,7 @@ fun AppNavigation(
     
     NavHost(
         navController = navController,
-        startDestination = AppScreen.LazyList.route
+        startDestination = AppScreen.MainScreen.route
     ){
         composable(
             route = AppScreen.LazyList.route

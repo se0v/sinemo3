@@ -1,6 +1,6 @@
 package com.example.sinemo.screens
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,10 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
-import androidx.navigation.NavGraphBuilder
 import com.example.sinemo.*
+import org.telegram.passport.TelegramPassport
 import java.io.File
 import java.lang.Exception
 
@@ -28,7 +27,7 @@ fun MainScreen() {
     val context = LocalContext.current
     Column(
         modifier = Modifier
-            .background((Color.DarkGray))
+            .background((Color.LightGray))
             .fillMaxWidth()
             .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
@@ -60,13 +59,13 @@ fun MainScreen() {
                 contentDescription = null
             )
         }
-        /*Button(onClick = {
+        Button(onClick = {
             telepass()
-            TelegramPassport.request(this@MainActivity, req, tgPassportResult)
+            TelegramPassport.request(context as Activity?, req, tgPassportResult)
         }, colors = ButtonDefaults
             .buttonColors(backgroundColor = Color.Cyan)) {
             Text(text = "Log in telegram", color = Color.Black)
-        }*/
+        }
     }
 
 }
