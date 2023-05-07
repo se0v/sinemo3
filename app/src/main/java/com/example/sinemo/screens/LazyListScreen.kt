@@ -1,6 +1,5 @@
 package com.example.sinemo.screens
 
-import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sinemo.AudioViewModel
@@ -42,7 +40,7 @@ fun LazyListScreen(
         ) { record ->
             Row {
                 AudioPlayer(
-                    audioSource = LocalContext.current.assets.openFd(record.audioPath),
+                    audioPath = record.audioPath,
                     modifier = Modifier.size(48.dp),
                 )
 
@@ -71,12 +69,12 @@ fun LazyListScreen(
 
 @Composable
 fun AudioPlayer(
-    audioSource: AssetFileDescriptor,
+    audioPath: String,
     modifier: Modifier = Modifier
 ) {
     val mediaPlayer = remember {
         MediaPlayer().apply {
-            setDataSource(audioSource.fileDescriptor, audioSource.startOffset, audioSource.length)
+            setDataSource(audioPath)
             prepare()
         }
     }
