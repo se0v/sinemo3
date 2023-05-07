@@ -13,24 +13,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.sinemo.navigation.AppNavigation
 import com.example.sinemo.navigation.AppScreen
-import com.example.sinemo.screens.MainScreen
 import com.example.sinemo.ui.theme.SinemoTheme
 import org.telegram.passport.*
 
+@Suppress("DEPRECATION")
 class MainActivity : ComponentActivity() {
-    private lateinit var audioRecordViewModel: AudioRecordViewModel
     @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        audioRecordViewModel = ViewModelProvider(this)[AudioRecordViewModel::class.java]
         setContent {
-            AudioRecordScreen(audioRecordViewModel)
 
-            var imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver? = null
+            val imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver?
             //register a receiver to tell the MainActivity when a notification has been received
             imageChangeBroadcastReceiver = ImageChangeBroadcastReceiver()
             val intentFilter = IntentFilter()
@@ -85,6 +81,7 @@ class MainActivity : ComponentActivity() {
         super.onSaveInstanceState(outState)
         outState.putSerializable("payload", payload)
     }
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 352) {

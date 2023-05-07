@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.sinemo
 import android.annotation.SuppressLint
-import android.app.Application
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Environment
@@ -8,9 +9,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import java.io.IOException
 import kotlin.math.log10
 var output: String = ""
@@ -20,6 +18,7 @@ var state: Boolean = false
 var maxAmplitude = 0
 var lastMaxAmplitude = 0
 var lastMaxAmplitudeTime = 0L
+var numRec = 0
 
 val handler = Handler(Looper.getMainLooper())
 private val amplitudeRunnable = object : Runnable {
@@ -43,8 +42,9 @@ private val amplitudeRunnable = object : Runnable {
 @RequiresApi(Build.VERSION_CODES.Q)
 fun startRecording() {
     try {
+        numRec++
         //val application: Application = MainActivity().application
-        output = Environment.getExternalStorageDirectory().absolutePath + "/recording.ogg"
+        output = Environment.getExternalStorageDirectory().absolutePath + "/recording$numRec.ogg"
         mediaRecorder = MediaRecorder()
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.OGG)
@@ -88,6 +88,5 @@ fun stopRecording() {
         lastMaxAmplitudeTime = 0L
     }
 }
-    data class AudioRecord(val filePath: String, val duration: Long)
 
 
