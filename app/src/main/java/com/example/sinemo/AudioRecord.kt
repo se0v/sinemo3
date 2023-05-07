@@ -31,7 +31,6 @@ private val amplitudeRunnable = object : Runnable {
             val currentTime = System.currentTimeMillis()
             if (dblast - db > 20 || currentTime - lastMaxAmplitudeTime >= 10000) {
                 stopRecording()
-                //_audioRecords.value = (_audioRecords.value ?: emptyList()) + AudioRecord(output, 0)
             } else {
                 lastMaxAmplitude = maxAmplitude
                 handler.postDelayed(this, 3000L)
@@ -43,7 +42,6 @@ private val amplitudeRunnable = object : Runnable {
 fun startRecording() {
     try {
         numRec++
-        //val application: Application = MainActivity().application
         output = Environment.getExternalStorageDirectory().absolutePath + "/recording$numRec.ogg"
         mediaRecorder = MediaRecorder()
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)

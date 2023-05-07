@@ -21,7 +21,6 @@ import org.telegram.passport.TelegramPassport
 import java.io.File
 import java.lang.Exception
 
-//private lateinit var audioRecordViewModel: AudioRecordViewModel
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
