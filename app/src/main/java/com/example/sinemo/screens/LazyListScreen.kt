@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sinemo.AudioViewModel
+import java.io.File
 
 @Composable
 fun LazyListScreen(
@@ -73,30 +74,36 @@ fun AudioPlayer(
     modifier: Modifier = Modifier
 ) {
     val mediaPlayer = remember {
-        MediaPlayer().apply {
-            setDataSource(audioPath)
-            prepare()
+        if (File(audioPath).exists()) {
+            MediaPlayer().apply {
+                setDataSource(audioPath)
+                prepare()
+            }
+        } else {
+            null
         }
     }
 
     DisposableEffect(mediaPlayer) {
         onDispose {
-            mediaPlayer.release()
+            mediaPlayer?.release()
         }
     }
 
     IconButton(
         onClick = {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-            } else {
-                mediaPlayer.start()
+            mediaPlayer?.let {
+                if (it.isPlaying) {
+                    it.pause()
+                } else {
+                    it.start()
+                }
             }
         },
         modifier = modifier
     ) {
         Icon(
-            imageVector = if (mediaPlayer.isPlaying) Icons.Default.Place
+            imageVector = if (mediaPlayer?.isPlaying == true) Icons.Default.Place
             else Icons.Default.PlayArrow,
             contentDescription = null
         )
