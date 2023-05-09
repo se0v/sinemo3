@@ -3,6 +3,7 @@
 package com.example.sinemo
 
 import android.annotation.SuppressLint
+import android.icu.text.SimpleDateFormat
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Environment
@@ -11,6 +12,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.io.IOException
+import java.util.*
 import kotlin.math.log10
 
 var output: String = ""
@@ -21,6 +23,8 @@ var maxAmplitude = 0
 var lastMaxAmplitude = 0
 var lastMaxAmplitudeTime = 0L
 var numRec = 0
+val recordList = mutableListOf<DataRecord>()
+val audioViewModel = AudioViewModel(recordList)
 
 val handler = Handler(Looper.getMainLooper())
 private val amplitudeRunnable = object : Runnable {
@@ -32,7 +36,7 @@ private val amplitudeRunnable = object : Runnable {
             Log.d("AMPLITUDE", "Max amplitude: $db dB")
             val currentTime = System.currentTimeMillis()
             if (dbLast - db > 20 || currentTime - lastMaxAmplitudeTime >= 10000) {
-                stopRecording(audioViewModel = AudioViewModel())
+                stopRecording(audioViewModel, recordList)
             } else {
                 lastMaxAmplitude = maxAmplitude
                 handler.postDelayed(this, 3000L)
@@ -70,7 +74,7 @@ fun startRecording() {
     }
 }
 @SuppressLint("MissingPermission")
-fun stopRecording(audioViewModel: AudioViewModel) {
+fun stopRecording(audioViewModel: AudioViewModel, recordList: MutableList<DataRecord>) {
     if (state) {
         try {
             mediaRecorder?.stop()
@@ -86,10 +90,15 @@ fun stopRecording(audioViewModel: AudioViewModel) {
         handler.removeCallbacks(amplitudeRunnable)
         lastMaxAmplitude = 0
         lastMaxAmplitudeTime = 0L
+        val currentTimeMillis = System.currentTimeMillis()
+        val date = Date(currentTimeMillis)
+        @SuppressLint("SimpleDateFormat")
+        val dateFormat = SimpleDateFormat("HH:mm:ss dd/MM/yyyy ")
+        val formattedDate = dateFormat.format(date)
         audioViewModel.addRecord(
             DataRecord(
                 heading = "recording$numRec",
-                subtext = "",
+                subtext = formattedDate.toString(),
                 audioPath = output
             )
         )

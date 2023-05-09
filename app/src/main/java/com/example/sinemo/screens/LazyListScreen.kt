@@ -31,7 +31,7 @@ fun LazyListScreen(
     audioViewModel: AudioViewModel = viewModel()
 ) {
 
-    val dataSet = audioViewModel.recordsState
+    val dataSet = audioViewModel.recordList
 
     LazyColumn(
         modifier = Modifier.fillMaxSize().background(color = Color.Gray)
