@@ -1,6 +1,7 @@
 @file:Suppress("DEPRECATION")
 
 package com.example.sinemo
+
 import android.annotation.SuppressLint
 import android.media.MediaRecorder
 import android.os.Build
@@ -11,6 +12,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import java.io.IOException
 import kotlin.math.log10
+
 var output: String = ""
 //var output: String? = null
 var mediaRecorder: MediaRecorder? = null
@@ -26,11 +28,11 @@ private val amplitudeRunnable = object : Runnable {
         if (mediaRecorder != null) {
             maxAmplitude = mediaRecorder!!.maxAmplitude
             val db = 20 * log10(maxAmplitude / 1.0)
-            val dblast = 20 * log10(lastMaxAmplitude / 1.0)
+            val dbLast = 20 * log10(lastMaxAmplitude / 1.0)
             Log.d("AMPLITUDE", "Max amplitude: $db dB")
             val currentTime = System.currentTimeMillis()
-            if (dblast - db > 20 || currentTime - lastMaxAmplitudeTime >= 10000) {
-                stopRecording()
+            if (dbLast - db > 20 || currentTime - lastMaxAmplitudeTime >= 10000) {
+                stopRecording(audioViewModel = AudioViewModel())
             } else {
                 lastMaxAmplitude = maxAmplitude
                 handler.postDelayed(this, 3000L)
@@ -55,7 +57,7 @@ fun startRecording() {
             state = true
             lastMaxAmplitudeTime = System.currentTimeMillis()
             handler.postDelayed(amplitudeRunnable, 100L)
-            Log.d("STREC", state.toString())
+            Log.d("REC", state.toString())
         } catch (e: IllegalStateException) {
             e.printStackTrace()
             mediaRecorder = null
@@ -68,7 +70,7 @@ fun startRecording() {
     }
 }
 @SuppressLint("MissingPermission")
-fun stopRecording() {
+fun stopRecording(audioViewModel: AudioViewModel) {
     if (state) {
         try {
             mediaRecorder?.stop()
@@ -80,10 +82,17 @@ fun stopRecording() {
             mediaRecorder = null
         }
         state = false
-        Log.d("STREC", state.toString())
+        Log.d("REC", state.toString())
         handler.removeCallbacks(amplitudeRunnable)
         lastMaxAmplitude = 0
         lastMaxAmplitudeTime = 0L
+        audioViewModel.addRecord(
+            DataRecord(
+                heading = "recording$numRec",
+                subtext = "",
+                audioPath = output
+            )
+        )
     }
 }
 
