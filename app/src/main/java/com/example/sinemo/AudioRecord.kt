@@ -10,21 +10,19 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.mutableStateListOf
 import java.io.IOException
 import java.util.*
 import kotlin.math.log10
 var output: String = ""
 //var output: String? = null
-var mediaRecorder: MediaRecorder? = null
-var state: Boolean = false
-var maxAmplitude = 0
-var lastMaxAmplitude = 0
-var lastMaxAmplitudeTime = 0L
+private var mediaRecorder: MediaRecorder? = null
+private var state: Boolean = false
+private var maxAmplitude = 0
+private var lastMaxAmplitude = 0
+private var lastMaxAmplitudeTime = 0L
 var numRec = 0
-val recordList = mutableStateListOf<DataRecord>()
-val audioViewModel = AudioViewModel(recordList)
-val handler = Handler(Looper.getMainLooper())
+val audioViewModel = AudioViewModel()
+private val handler = Handler(Looper.getMainLooper())
 private val amplitudeRunnable = object : Runnable {
     override fun run() {
         if (mediaRecorder != null) {

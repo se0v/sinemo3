@@ -12,8 +12,8 @@ sealed class AppScreen(
     @StringRes val nameResource: Int,
     val icon: ImageVector
 ){
-    object LazyList: AppScreen("lazylist", R.string.screen_lazy_list, Icons.Default.List)
-    object MainScreen: AppScreen("mainscreen", R.string.screen_main, Icons.Default.Home)
+    object LazyList: AppScreen("lazyList", R.string.screen_lazy_list, Icons.Default.List)
+    object MainScreen: AppScreen("mainScreen", R.string.screen_main, Icons.Default.Home)
 
     companion object {
         fun getAll() = listOf(

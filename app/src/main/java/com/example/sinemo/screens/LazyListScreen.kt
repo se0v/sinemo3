@@ -22,13 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.sinemo.AudioViewModel
+import com.example.sinemo.audioViewModel
 import java.io.File
 
 @Composable
 fun LazyListScreen(
-    audioViewModel: AudioViewModel = viewModel()
 ) {
 
     val dataSet = audioViewModel.recordList
