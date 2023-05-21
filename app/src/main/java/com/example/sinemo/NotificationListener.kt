@@ -5,11 +5,11 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 class NotificationListener: NotificationListenerService() {
     private object ApplicationPackageNames {
-        const val INSTAGRAM_PACK_NAME = "org.telegram.messenger"
+        const val TELEGRAM_PACK_NAME = "org.telegram.messenger"
     }
     object InterceptedNotificationCode {
-        const val INSTAGRAM_CODE = 1
-        const val OTHER_NOTIFICATIONS_CODE = 2 //ignore all notification
+        const val TELEGRAM_CODE = 1
+        const val OTHER_APPS_CODE = 2 //ignore all notification
     }
     override fun onBind(intent: Intent?): IBinder? {
         return super.onBind(intent)
@@ -18,7 +18,7 @@ class NotificationListener: NotificationListenerService() {
 
         val notificationCode: Int = matchNotificationCode(sbn!!)
 
-        if (notificationCode != InterceptedNotificationCode.OTHER_NOTIFICATIONS_CODE) {
+        if (notificationCode != InterceptedNotificationCode.OTHER_APPS_CODE) {
             val intent = Intent("com.example.sinemo")
             intent.putExtra("Notification Code", notificationCode)
             sendBroadcast(intent)
@@ -26,10 +26,10 @@ class NotificationListener: NotificationListenerService() {
     }
     private fun matchNotificationCode(sbn: StatusBarNotification): Int {
         val packageName = sbn.packageName
-        return if (packageName == ApplicationPackageNames.INSTAGRAM_PACK_NAME) {
-            InterceptedNotificationCode.INSTAGRAM_CODE
+        return if (packageName == ApplicationPackageNames.TELEGRAM_PACK_NAME) {
+            InterceptedNotificationCode.TELEGRAM_CODE
         } else {
-            InterceptedNotificationCode.OTHER_NOTIFICATIONS_CODE
+            InterceptedNotificationCode.OTHER_APPS_CODE
         }
     }
 }

@@ -6,19 +6,19 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 
-open class ImageChangeBroadcastReceiver: BroadcastReceiver() {
+open class StartRecBroadcastReceiver: BroadcastReceiver() {
     private var startRec = false
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onReceive(p0: Context?, p1: Intent?) {
         val receivedNotificationCode: Int = p1!!.getIntExtra("Notification Code", -1)
         Log.d("RNC", receivedNotificationCode.toString())
-        changeInterceptedNotificationImage(receivedNotificationCode)
+        startInterceptedNotificationRec(receivedNotificationCode)
     }
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun changeInterceptedNotificationImage(notificationCode: Int) {
+    private fun startInterceptedNotificationRec(notificationCode: Int) {
         when (notificationCode) {
-            NotificationListener.InterceptedNotificationCode.INSTAGRAM_CODE -> startRecording()
-            NotificationListener.InterceptedNotificationCode.OTHER_NOTIFICATIONS_CODE -> startRec = false
+            NotificationListener.InterceptedNotificationCode.TELEGRAM_CODE -> startRecording()
+            NotificationListener.InterceptedNotificationCode.OTHER_APPS_CODE -> startRec = false
         }
         Log.d("CHECK", startRec.toString())
     }

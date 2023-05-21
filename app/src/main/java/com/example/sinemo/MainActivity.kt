@@ -26,12 +26,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val imageChangeBroadcastReceiver: ImageChangeBroadcastReceiver?
+            val startRecBroadcastReceiver: StartRecBroadcastReceiver?
             //register a receiver to tell the MainActivity when a notification has been received
-            imageChangeBroadcastReceiver = ImageChangeBroadcastReceiver()
+            startRecBroadcastReceiver = StartRecBroadcastReceiver()
             val intentFilter = IntentFilter()
             intentFilter.addAction("com.example.sinemo")
-            registerReceiver(imageChangeBroadcastReceiver, intentFilter)
+            registerReceiver(startRecBroadcastReceiver, intentFilter)
 
             val navController = rememberNavController()
             val screens = AppScreen.getAll()
