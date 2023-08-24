@@ -1,10 +1,9 @@
 package com.example.sinemo
+import android.Manifest
 import android.annotation.SuppressLint
-import android.app.*
-import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
@@ -13,18 +12,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.sinemo.navigation.AppNavigation
 import com.example.sinemo.navigation.AppScreen
 import com.example.sinemo.ui.theme.SinemoTheme
-import org.telegram.passport.*
 
-@Suppress("DEPRECATION")
 class MainActivity : ComponentActivity() {
-    @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
+    @SuppressLint("CoroutineCreationDuringComposition", "NewApi",
+        "UnusedMaterialScaffoldPaddingParameter", "UnspecifiedRegisterReceiverFlag"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+
+            val REQUEST_RECORD_AUDIO_PERMISSION = 1
+
+            // Проверяем, есть ли разрешение на использование микрофона
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                // Если разрешения нет, запрашиваем его у пользователя
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_RECORD_AUDIO_PERMISSION)
+            }
 
             val startRecBroadcastReceiver: StartRecBroadcastReceiver?
             //register a receiver to tell the MainActivity when a notification has been received
@@ -77,28 +87,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable("payload", payload)
-    }
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 352) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "login_successful", Toast.LENGTH_SHORT).show()
-            } else if (resultCode == TelegramPassport.RESULT_ERROR) {
-                if (data != null) {
-                    AlertDialog.Builder(this)
-                        .setTitle("error")
-                        .setMessage(data.getStringExtra("error"))
-                        .setPositiveButton("ok", null)
-                        .show()
-                }
-            } else {
-                Toast.makeText(this, "login_canceled", Toast.LENGTH_SHORT).show()
-            }}
-}
 }
 
 

@@ -1,26 +1,32 @@
 package com.example.sinemo.screens
 
-import android.app.Activity
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.example.sinemo.*
-import org.telegram.passport.TelegramPassport
 import java.io.File
 import java.lang.Exception
 
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
@@ -33,7 +39,8 @@ fun MainScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     )
     {
-        Button(onClick = { stopRecording(audioViewModel)
+        Button(onClick = {
+            stopRecording(audioViewModel)
             try {
                 val file = File(output)
                 if(file.exists()) {
@@ -50,21 +57,36 @@ fun MainScreen() {
                 e.printStackTrace()
             }
         },
-            colors = ButtonDefaults
-                .buttonColors(backgroundColor = Color.Black)) {
-            Text(text = "Share emotion ")
-            Icon(
-                imageVector = Icons.Default.Send,
-                contentDescription = null
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Black
+            ),
+            modifier = Modifier
+                .size(250.dp)
+                .clip(CircleShape)){
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             )
-        }
-        Button(onClick = {
-            telepass()
-            TelegramPassport.request(context as Activity?, req, tgPassportResult)
-        }, colors = ButtonDefaults
-            .buttonColors(backgroundColor = Color.Cyan)) {
-            Text(text = "Log in telegram", color = Color.Black)
+            {
+                Text(text = "Share",
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(start = 55.dp)
+                    .rotate(25f),
+                fontSize = 25.sp)
+                Icon(
+                    imageVector = Icons.Default.Send,
+                    contentDescription = null,
+                    modifier = Modifier.size(148.dp)
+                )
+                Text(text = "emotion",
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .rotate(-25f)
+                        .padding(start = 55.dp),
+                fontSize = 25.sp)
+            }
         }
     }
-
 }

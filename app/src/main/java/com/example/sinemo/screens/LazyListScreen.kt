@@ -32,7 +32,7 @@ fun LazyListScreen(
     val dataSet = audioViewModel.recordList
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(color = Color.Gray)
+        modifier = Modifier.fillMaxSize().background(color = Color.LightGray)
     ) {
         items(
             items = dataSet
@@ -48,17 +48,20 @@ fun LazyListScreen(
                 ) {
                     Text(
                         text = record.heading,
-                        style = MaterialTheme.typography.h5
+                        style = MaterialTheme.typography.h5,
+                        color = Color.Black
                     )
                     Text(
-                        text = record.subtext
+                        text = record.subtext,
+                        color = Color.Black
                     )
                 }
 
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {  }) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = Color.Black
                     )
                 }
             }
@@ -103,7 +106,8 @@ fun AudioPlayer(
         Icon(
             imageVector = if (mediaPlayer?.isPlaying == true) Icons.Default.Place
             else Icons.Default.PlayArrow,
-            contentDescription = null
+            contentDescription = null,
+            tint = Color.Black
         )
     }
 }
